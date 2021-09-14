@@ -51,11 +51,11 @@ def dkc(request):
     if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
         form1 = ArticlesForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
-            # try:
+            try:
                 dkc1(form1.cleaned_data['partnumber'])
                 clear = 'Готово. Проверьте каталог DKC_files'
-            # except:
-            #     error = 'Ошибка. Проверьте артикул'
+            except:
+                error = 'Ошибка. Проверьте артикул'
         else:
             error = 'Ошибка. Неверный ввод'
 
