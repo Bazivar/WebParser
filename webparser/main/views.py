@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import ArticlesForm
 from .SE1_parser import parce as se1
+from .DKC1_parser import parce as dkc1
 
 def index(request):
     data = {
@@ -41,4 +42,28 @@ def se(request):
         'form': form,
         'clear':clear,
         'error': error}
-    return render(request, 'main/se.html', data)
+    return render(request, 'main/parser.html', data)
+
+
+def dkc(request):
+    error = ''
+    clear = ''
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            # try:
+                dkc1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог DKC_files'
+            # except:
+            #     error = 'Ошибка. Проверьте артикул'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Сбор данных для DKC',
+        'form': form,
+        'clear':clear,
+        'error': error}
+    return render(request, 'main/parser.html', data)
