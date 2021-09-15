@@ -9,5 +9,5 @@ class ArticlesForm(ModelForm):
         widgets = {
             'partnumber': TextInput(attrs= {
                 'class': 'form-control',
-                'placeholder': 'Партномер'})
+                'placeholder': 'Введите значение'})
         }
