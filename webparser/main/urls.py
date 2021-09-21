@@ -14,4 +14,7 @@ urlpatterns = [
     path('rittal/', views.rittal, name = 'rittal'),
     path('wago/', views.wago, name = 'wago'),
     path('dlink/', views.dlink, name = 'dlink'),
+
+    path('se_mass/', views.se_mass, name = 'se_mass'),
+
 ]

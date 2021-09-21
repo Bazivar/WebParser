@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .forms import ArticlesForm
+from .forms import ArticlesForm, NumbersForm
+
 from .SE1_parser import parce as se1
 from .DKC1_parser import parce as dkc1
 from .Bolid_parcer import parce as bolid1
@@ -11,6 +12,8 @@ from .Phoenix1_parser import parce as phoenix1
 from .Rittal1_parser import parce as rittal1
 from .Wago1_parser import parce as wago1
 from .Dlink1_parcer import parce as dlink1
+
+from .SE_Parser import parce as se_parse
 
 def index(request):
     data = {
@@ -26,7 +29,7 @@ def index(request):
                "Schneider Electric",
                "Ubiquiti", 'UNV',
                "Wago"],
-        'version': 2.0
+        'version': 2.1
     }
     return render(request, 'main/index.html', data)
 
@@ -358,3 +361,41 @@ def wago(request):
         'error': error}
 
     return render(request, 'main/parser.html', data)
+
+
+
+
+
+
+
+
+
+
+def se_mass(request):
+    error = ''
+    clear = ''
+    value = 'Номера позиций сайта'
+    description = 'Парсер собирает данные данные по партномеру с сайта se.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции и файл с описанием производителя. '
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            if form1.cleaned_data['value_a'] > form1.cleaned_data['value_b']:
+                error = 'Ошибка. Неверный ввод'
+            else:
+                se_parse(form1.cleaned_data['value_a'], form1.cleaned_data['value_b'])
+                clear = 'Готово. Проверьте каталог SE_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер Schneider Electric',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
