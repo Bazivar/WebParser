@@ -12,8 +12,11 @@ from .Phoenix1_parser import parce as phoenix1
 from .Rittal1_parser import parce as rittal1
 from .Wago1_parser import parce as wago1
 from .Dlink1_parcer import parce as dlink1
-
+from .Hikvision_parser import parce as hikvision1
+from .UNV_parser import parce as unv1
 from .SE_Parser import parce as se_parse
+from .Mikrotik_parcer import parce as mikrotik1
+from .Ubiquiti_parser import parce as ubiquiti1
 
 def index(request):
     data = {
@@ -67,7 +70,8 @@ def dahua(request):
     error = ''
     clear = ''
     value = 'Ссылка на страницу продукта:'
-
+    description = 'Парсер собирает данные по ссылке на сайт dahuasecurity.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также даташит производителя. Вся текстовая информация переводится на русский в Google Translate'
     if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
         form1 = ArticlesForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
@@ -86,7 +90,7 @@ def dahua(request):
         'form': form,
         'clear': clear,
         'value': value,
-        # 'description': description,
+        'description': description,
         'error': error}
 
     return render(request, 'main/parser.html', data)
@@ -152,6 +156,36 @@ def dlink(request):
     return render(request, 'main/parser.html', data)
 
 
+def hikvision(request):
+    error = ''
+    clear = ''
+    value = 'Ссылка на страницу продукта:'
+    description = 'Парсер собирает данные по ссылке на сайт hikvision.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также даташит производителя. Вся текстовая информация переводится на русский в Google Translate'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                hikvision1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог Hikvision_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер Hikvision',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
+
+
 def iek(request):
     error = ''
     clear = ''
@@ -182,6 +216,36 @@ def iek(request):
     return render(request, 'main/parser.html', data)
 
 
+def mikrotik(request):
+    error = ''
+    clear = ''
+    value = 'Ссылка на страницу продукта:'
+    description = 'Парсер собирает данные по ссылке на сайт mikrotik.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также даташит производителя. Вся текстовая информация переводится на русский в Google Translate'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                mikrotik1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог Mikrotik_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер Mikrotik',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
+
+
 def optimus(request):
     error = ''
     clear = ''
@@ -191,11 +255,11 @@ def optimus(request):
     if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
         form1 = ArticlesForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
-            # try:
+            try:
                 optimus1(form1.cleaned_data['partnumber'])
                 clear = 'Готово. Проверьте каталог Optimus_files'
-            # except:
-            #     error = 'Ошибка. Проверьте ссылку'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
         else:
             error = 'Ошибка. Неверный ввод'
 
@@ -221,11 +285,11 @@ def phoenix(request):
     if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
         form1 = ArticlesForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
-            # try:
+            try:
                 phoenix1(form1.cleaned_data['partnumber'])
                 clear = 'Готово. Проверьте каталог Phoenix_files'
-            # except:
-            #     error = 'Ошибка. Проверьте артикул'
+            except:
+                error = 'Ошибка. Проверьте артикул'
         else:
             error = 'Ошибка. Неверный ввод'
 
@@ -332,6 +396,64 @@ def itk(request):
     return render(request, 'main/parser.html', data)
 
 
+def ubiquiti(request):
+    error = ''
+    clear = ''
+    value = 'Ссылка на страницу продукта:'
+    description = 'Парсер собирает данные по ссылке на сайт ubnt.su. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также даташит производителя.'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                ubiquiti1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог Ubiquiti_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер Ubiquiti',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
+
+
+def unv(request):
+    error = ''
+    clear = ''
+    value = 'Ссылка на страницу продукта:'
+    description = 'Парсер собирает данные по ссылке на сайт en.uniview.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также даташит производителя. Вся текстовая информация переводится на русский в Google Translate'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                unv1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог UNV_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер Uniview',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
 
 def wago(request):
     error = ''
@@ -374,19 +496,24 @@ def wago(request):
 def se_mass(request):
     error = ''
     clear = ''
-    value = 'Номера позиций сайта'
+    value = 'Номера позиций прайса'
     description = 'Парсер собирает данные данные по партномеру с сайта se.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
                   ' изображение позиции и файл с описанием производителя. '
+
     if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
         form1 = NumbersForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
-            if form1.cleaned_data['value_a'] > form1.cleaned_data['value_b']:
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if a > b:
                 error = 'Ошибка. Неверный ввод'
             else:
-                se_parse(form1.cleaned_data['value_a'], form1.cleaned_data['value_b'])
-                clear = 'Готово. Проверьте каталог SE_files'
+                se_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог SE_files'
         else:
             error = 'Ошибка. Неверный ввод'
+
+
 
     form = NumbersForm()
 

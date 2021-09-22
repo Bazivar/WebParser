@@ -22,10 +22,12 @@ class NumbersForm (ModelForm):
                 'class': 'form-control',
                 'type': 'number',
                 'placeholder': 'Начальная позиция',
+                'value': '',
             }),
             'value_b': TextInput(attrs={
                 'class': 'form-control',
                 'type': 'number',
                 'placeholder': 'Конечная позиция',
+                'value': '',
             }),
         }

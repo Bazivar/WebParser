@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import urllib
 from urllib.request import Request, urlopen
 from pdfrw import PdfReader, PdfWriter
-from googletrans import Translator
+from googletrans import *
 import urllib.parse
 import os
 
@@ -14,7 +14,8 @@ def parce(site):
     soup = BeautifulSoup(urlopen(req), features="html.parser")
 
     #getting the item ID
-    item_id = 'DH-' + soup.find('title').getText().replace('/', '_')
+    item_id = 'DH-' + soup.find('title').getText().replace('/', '_').replace(' | Dahua Technology','')
+
 
     #setting the savepath of the files
     save_path = os.path.dirname(os.path.realpath(__file__)) + f'\RESULT\Dahua_files\{item_id}'
