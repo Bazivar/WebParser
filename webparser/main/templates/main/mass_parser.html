@@ -1,4 +1,5 @@
 {% extends 'main/layout.html' %}
+{% load static %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -18,6 +19,8 @@
         </form>
         <br>
         <p>{{ description }}</p>
+        <br>
+        <button class = "btn btn-primary"><a href="{% static price %}" download>Скачать файл с прайсом</a></button>
     </div>
 
 {% endblock %}

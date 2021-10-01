@@ -21,5 +21,6 @@ urlpatterns = [
 
 
     path('se_mass/', views.se_mass, name = 'se_mass'),
+    path('dkc_mass/', views.dkc_mass, name = 'dkc_mass'),
 
 ]

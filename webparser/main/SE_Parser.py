@@ -11,7 +11,8 @@ def parce (a, b):
     a = int(a)
     b = int(b)
     # working with Excel:
-    wb = openpyxl.load_workbook('se_price.xlsx')
+    file = os.path.dirname(os.path.realpath(__file__)) + '\static\main\price\se_price.xlsx'
+    wb = openpyxl.load_workbook(file)
     sheet = wb['Tariff_Belarus']
 
     for k in range(a,b+1):
@@ -109,4 +110,4 @@ def parce (a, b):
             sheet[f'I{k}'] = "Ошибка"
             continue
 
-    wb.save('se_price.xlsx')
+    wb.save(file)
