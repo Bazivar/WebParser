@@ -25,6 +25,8 @@ from .DKC_parcer import parce as dkc_parse
 from .Phoenix_parser import parce as phoenix_parse
 from .Rittal_parser import parce as rittal_parse
 from .Wago_parser import parce as wago_parse
+from .IEK_Parcer import parce as iek_parse
+from .ITK_parcer import parce as itk_parse
 
 
 def index(request):
@@ -675,6 +677,77 @@ def wago_mass(request):
 
     data = {
         'title': 'Парсер Wago',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'price': price,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
+
+
+
+def iek_mass(request):
+    error = ''
+    clear = ''
+    price = 'main/price/iek_price.xlsx'
+    value = 'Номера позиций прайса'
+    description = 'Парсер собирает данные данные по партномеру с сайта iek.ru. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также файл руководства по эксплуатации и, если есть, краткое руководство по эксплуатации'
+
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if a > b:
+                error = 'Ошибка. Неверный ввод'
+            else:
+                iek_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог IEK_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер IEK',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'price': price,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
+
+
+def itk_mass(request):
+    error = ''
+    clear = ''
+    price = 'main/price/itk_price.xlsx'
+    value = 'Номера позиций прайса'
+    description = 'Парсер собирает данные данные по партномеру с сайта itk-group.ru. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также файлы паспорта, руководства по эксплуатации и руководства по монтажу'
+
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if a > b:
+                error = 'Ошибка. Неверный ввод'
+            else:
+                itk_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог ITK_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер ITK',
         'form': form,
         'clear': clear,
         'value': value,

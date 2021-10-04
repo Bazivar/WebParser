@@ -22,6 +22,8 @@ urlpatterns = [
 
     path('se_mass/', views.se_mass, name = 'se_mass'),
     path('dkc_mass/', views.dkc_mass, name = 'dkc_mass'),
+    path('iek_mass/', views.iek_mass, name = 'iek_mass'),
+    path('itk_mass/', views.itk_mass, name = 'itk_mass'),
     path('phoenix_mass/', views.phoenix_mass, name = 'phoenix_mass'),
     path('rittal_mass/', views.rittal_mass, name = 'rittal_mass'),
     path('wago_mass/', views.wago_mass, name = 'wago_mass'),
