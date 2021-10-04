@@ -22,6 +22,9 @@ from .Ubiquiti_parser import parce as ubiquiti1
 
 from .SE_Parser import parce as se_parse
 from .DKC_parcer import parce as dkc_parse
+from .Phoenix_parser import parce as phoenix_parse
+from .Rittal_parser import parce as rittal_parse
+from .Wago_parser import parce as wago_parse
 
 
 def index(request):
@@ -563,6 +566,115 @@ def dkc_mass(request):
 
     data = {
         'title': 'Парсер DKC',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'price': price,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
+
+
+def phoenix_mass(request):
+    error = ''
+    clear = ''
+    price = 'main/price/phoenix_price.xlsx'
+    value = 'Номера позиций прайса'
+    description = 'Парсер собирает данные данные с сайта phoenixcontact.com на основании прайса. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции и файл страницы каталога. Сайт открывается через эмуляцию открытия в браузере и двемя вкладками.' \
+                  ' С первого раза система может собрать не все данные из-за блокирования сайтом повторного запроса'
+
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if a > b:
+                error = 'Ошибка. Неверный ввод'
+            else:
+                phoenix_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог Phoenix_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер Phoenix Contact',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'price': price,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
+
+
+
+def rittal_mass(request):
+    error = ''
+    clear = ''
+    price = 'main/price/rittal_price.xlsx'
+    value = 'Номера позиций прайса'
+    description = 'Парсер собирает данные данные по партномеру с сайта rittal.com/ru-ru. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции и файл с описанием производителя. '
+
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if a > b:
+                error = 'Ошибка. Неверный ввод'
+            else:
+                rittal_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог Rittal_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер Rittal',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'price': price,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
+
+
+def wago_mass(request):
+    error = ''
+    clear = ''
+    price = 'main/price/wago_price.xlsx'
+    value = 'Номера позиций прайса'
+    description = 'Парсер собирает данные данные по партномеру с сайта wago.com. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции и файл с описанием производителя. '
+
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if a > b:
+                error = 'Ошибка. Неверный ввод'
+            else:
+                wago_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог Wago_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер Wago',
         'form': form,
         'clear': clear,
         'value': value,
