@@ -43,7 +43,7 @@ def index(request):
                "Schneider Electric",
                "Ubiquiti", 'UNV',
                "Wago"],
-        'version': 2.1
+        'version': 2.2
     }
     return render(request, 'main/index.html', data)
 
@@ -517,7 +517,7 @@ def se_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 se_parse(a, b)
@@ -554,7 +554,7 @@ def dkc_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 dkc_parse(a, b)
@@ -592,7 +592,7 @@ def phoenix_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 phoenix_parse(a, b)
@@ -630,7 +630,7 @@ def rittal_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 rittal_parse(a, b)
@@ -665,7 +665,7 @@ def wago_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 wago_parse(a, b)
@@ -701,7 +701,7 @@ def iek_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 iek_parse(a, b)
@@ -736,7 +736,7 @@ def itk_mass(request):
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
             b = form1.cleaned_data['value_b']
-            if a > b:
+            if int(a) > int(b):
                 error = 'Ошибка. Неверный ввод'
             else:
                 itk_parse(a, b)
