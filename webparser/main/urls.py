@@ -3,6 +3,7 @@ from . import  views
 
 urlpatterns = [
     path('', views.index, name = 'index'),
+    path('apc/', views.apc, name = 'apc'),
     path('dkc/', views.dkc, name = 'dkc'),
     path('bolid/', views.bolid, name = 'bolid'),
     path('dahua/', views.dahua, name = 'dahua'),

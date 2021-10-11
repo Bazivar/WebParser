@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import ArticlesForm, NumbersForm
-import os
+
 
 from .SE1_parser import parce as se1
 from .DKC1_parser import parce as dkc1
@@ -17,6 +17,7 @@ from .Hikvision_parser import parce as hikvision1
 from .UNV_parser import parce as unv1
 from .Mikrotik_parcer import parce as mikrotik1
 from .Ubiquiti_parser import parce as ubiquiti1
+from .APC_parser import parse as apc1
 
 
 
@@ -46,6 +47,38 @@ def index(request):
         'version': 2.2
     }
     return render(request, 'main/index.html', data)
+
+def apc(request):
+    error = ''
+    clear = ''
+    value = 'Партномер:'
+    description = 'Парсер собирает данные со страницы сайта apc.com по партномеру. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' и изображение позиции'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                apc1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог APC_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер APC',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
+
+
+
 
 def bolid(request):
     error = ''
