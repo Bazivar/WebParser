@@ -153,9 +153,9 @@ def parce (a,b):
                 urllib.request.install_opener(opener)
                 # setting the pdf path
                 if item_passport_pdf_link == None:
-                    save_path_pdf = save_path+"-pdf.pdf"
+                    save_path_pdf = save_path +"-pdf.pdf"
                 else:
-                    save_path_pdf = f"RESULT/ITK_files/2nd_pdf/{item_id}-pdf.pdf"
+                    save_path_pdf = os.path.dirname(os.path.realpath(__file__)) + f"\RESULT\ITK_files\\2nd_pdf\{item_id}-pdf.pdf"
                 urllib.request.urlretrieve(item_install_manual_pdf_link, save_path_pdf)
                 #setting the PDF file title and author
                 trailer = PdfReader(save_path_pdf)
@@ -173,11 +173,11 @@ def parce (a,b):
                 urllib.request.install_opener(opener)
                 # setting the pdf path
                 if item_passport_pdf_link == None and item_install_manual_pdf_link == None:
-                    save_path_pdf = f"RESULT/ITK_files/{item_id}-pdf.pdf"
+                    save_path_pdf = save_path+"-pdf.pdf"
                 elif item_passport_pdf_link == None and item_install_manual_pdf_link != None:
-                    save_path_pdf = f"RESULT/ITK_files/2nd_pdf/{item_id}-pdf.pdf"
+                    save_path_pdf = os.path.dirname(os.path.realpath(__file__)) + f"\RESULT\ITK_files\\2nd_pdf\{item_id}-pdf.pdf"
                 else:
-                    save_path_pdf = f"RESULT/ITK_files/3rd_pdf/{item_id}-pdf.pdf"
+                    save_path_pdf = os.path.dirname(os.path.realpath(__file__)) + f"\RESULT\ITK_files\\3rd_pdf\{item_id}-pdf.pdf"
                 urllib.request.urlretrieve(item_manual_pdf_link, save_path_pdf)
                 #setting the PDF file title and author
                 trailer = PdfReader(save_path_pdf)

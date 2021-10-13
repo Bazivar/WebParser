@@ -44,7 +44,7 @@ def index(request):
                "Schneider Electric",
                "Ubiquiti", 'UNV',
                "Wago"],
-        'version': 2.2
+        'version': 2.3
     }
     return render(request, 'main/index.html', data)
 

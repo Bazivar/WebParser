@@ -129,7 +129,7 @@ def parce (item_id):
         opener.addheaders = [('User-agent', 'Chrome/91.0')]
         urllib.request.install_opener(opener)
         # setting the pdf path
-        save_path_pdf_2 = f"RESULT/IEK_files/2nd_pdf/{item_id}-pdf.pdf"
+        save_path_pdf_2 = os.path.dirname(os.path.realpath(__file__)) + f"\RESULT\IEK_files\\2nd_pdf\{item_id}-pdf.pdf"
         urllib.request.urlretrieve(item_install_manual_pdf_link, save_path_pdf_2)
         #setting the PDF file title and author
         trailer = PdfReader(save_path_pdf_2)
