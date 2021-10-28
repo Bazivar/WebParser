@@ -26,8 +26,9 @@ def parce (site):
     item_benefits = '<ul>\n'
     for element in benefits:
         if element == '\n':continue
-        else: item_benefits += "<li>" + element.replace('\n','') + '</li>\n'
+        else: item_benefits += "<li>" + element.replace('\n','') + ' </li>\n'
     item_benefits +='</ul>'
+
     item_benefits = translator.translate(item_benefits,src='en', dest='ru').text
 
     #getting the item description
@@ -35,7 +36,7 @@ def parce (site):
     item_description = '<ul>\n'
     for element in raw_description:
         if raw_description.index(element) in range (0, 2): continue
-        else: item_description += "<li>" + element.getText()+ '</li>\n'
+        else: item_description += "<li>" + element.getText(": ", strip=True)+ ' </li>\n'
     item_description +='</ul>'
     item_description = translator.translate(item_description,src='en', dest='ru').text
 

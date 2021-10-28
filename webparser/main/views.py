@@ -18,6 +18,7 @@ from .UNV_parser import parce as unv1
 from .Mikrotik_parcer import parce as mikrotik1
 from .Ubiquiti_parser import parce as ubiquiti1
 from .APC_parser import parse as apc1
+from .Planet_parser import parse as planet1
 
 
 
@@ -33,7 +34,8 @@ from .ITK_parcer import parce as itk_parse
 def index(request):
     data = {
         'title': 'Парсер файлов с веб-страниц сайтов вендоров',
-        'vendors': ["Bolid",
+        'vendors': ["APC",
+               "Bolid",
                "D-link", "DKC", 'Dahua',
                'Hikvision',
                "IEK", "ITK",
@@ -334,6 +336,36 @@ def phoenix(request):
                 clear = 'Готово. Проверьте каталог Phoenix_files'
             except:
                 error = 'Ошибка. Проверьте артикул'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер Phoenix Contact',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
+
+
+def planet(request):
+    error = ''
+    clear = ''
+    value = 'Ссылка:'
+    description = 'Парсер собирает данные данные со страницы сайта www.planet.com.tw. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение и все файлы позиции. Описание переводится в Google Translate. Перевод занимает много времени, порядка 2 минут на позицию.'
+    if request.method == 'POST':
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                planet1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог Planet_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
         else:
             error = 'Ошибка. Неверный ввод'
 

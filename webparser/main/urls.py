@@ -14,6 +14,7 @@ urlpatterns = [
     path('mikrotik/', views.mikrotik, name = 'mikrotik'),
     path('optimus/', views.optimus, name = 'optimus'),
     path('phoenix/', views.phoenix, name = 'phoenix'),
+    path('Planet/', views.planet, name = 'planet'),
     path('rittal/', views.rittal, name = 'rittal'),
     path('se/', views.se, name = 'se'),
     path('ubiquiti/', views.ubiquiti, name = 'ubiquiti'),
