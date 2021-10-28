@@ -372,7 +372,7 @@ def planet(request):
     form = ArticlesForm()
 
     data = {
-        'title': 'Парсер Phoenix Contact',
+        'title': 'Парсер Planet',
         'form': form,
         'clear': clear,
         'value': value,
