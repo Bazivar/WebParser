@@ -361,11 +361,11 @@ def planet(request):
     if request.method == 'POST':
         form1 = ArticlesForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
-            try:
+            # try:
                 planet1(form1.cleaned_data['partnumber'])
                 clear = 'Готово. Проверьте каталог Planet_files'
-            except:
-                error = 'Ошибка. Проверьте ссылку'
+            # except:
+            #     error = 'Ошибка. Проверьте ссылку'
         else:
             error = 'Ошибка. Неверный ввод'
 

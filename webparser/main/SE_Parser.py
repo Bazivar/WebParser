@@ -19,10 +19,6 @@ def parce (a, b):
         try: #avoiding exceptions in the program
             item_id = sheet[f'A{k}'].value #reading ID from the file
 
-            # #checking is the parcing had already been done if so, continue
-            # if sheet[f'D{k}'].value != None:
-            #     continue
-
             save_path = os.path.dirname(os.path.realpath(__file__)) + f'\RESULT\SE_files\{item_id}'
 
             #getting the page
@@ -50,17 +46,13 @@ def parce (a, b):
             item_left_descr = []
             item_right_descr = []
             for i in range(len(item_raw_left_desc)):
-                item_left_descr.append(item_raw_left_desc[i].get_text())
-                item_right_descr.append(item_raw_right_desc[i].get_text())
+                item_left_descr.append(item_raw_left_desc[i].get_text()+':')
+                item_right_descr.append(item_raw_right_desc[i].get_text(';'))
                 item_right_descr[i] = item_right_descr[i].replace(r"                          ", '')
                 item_right_descr[i] = item_right_descr[i].replace(u"\xa0", ' ')
                 item_right_descr[i] = item_right_descr[i].replace("\n", ' ')
                 item_right_descr[i] = item_right_descr[i][2:]
                 item_right_descr[i] = item_right_descr[i][:-2]
-
-            description = item_short_name + "\n" + "ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ" + "\n"
-            for i in range(len(item_right_descr)):
-                description = description + item_left_descr[i] + " " + item_right_descr[i] + "\n"
 
             #creating the HTML description
             html_desc = ""
@@ -105,7 +97,7 @@ def parce (a, b):
             sheet[f'H{k}'] = save_path+'.html'
             #pdf2 file    sheet[f'H{k}'] = save_path+".png"
             #raw description
-            sheet[f'I{k}'] = description
+            sheet[f'I{k}'] = "Успешно"
         except:
             sheet[f'I{k}'] = "Ошибка"
             continue

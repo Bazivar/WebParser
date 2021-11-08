@@ -36,22 +36,18 @@ def parce (item_id):
     item_left_descr = []
     item_right_descr = []
     for i in range(len(item_raw_left_desc)):
-        item_left_descr.append(item_raw_left_desc[i].get_text())
-        item_right_descr.append(item_raw_right_desc[i].get_text())
+        item_left_descr.append(item_raw_left_desc[i].get_text()+':')
+        item_right_descr.append(item_raw_right_desc[i].get_text('; '))
         item_right_descr[i] = item_right_descr[i].replace(r"                          ", '')
         item_right_descr[i] = item_right_descr[i].replace(u"\xa0", ' ')
         item_right_descr[i] = item_right_descr[i].replace("\n", ' ')
         item_right_descr[i] = item_right_descr[i][2:]
         item_right_descr[i] = item_right_descr[i][:-2]
 
-    description = item_short_name + "\n" + "ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ" + "\n"
-    for i in range(len(item_right_descr)):
-        description = description + item_left_descr[i] + " " + item_right_descr[i] + "\n"
-
     #creating the HTML description
     html_desc = ""
     for i in range(len(item_right_descr)):
-        html_desc =html_desc + "<li>" + item_left_descr[i] + " " + item_right_descr[i] +"\n"
+        html_desc =html_desc + "<li>" + item_left_descr[i] + " " + item_right_descr[i] +"</li>\n"
 
     file_description = ("<html><head></head>\n" +
                         "<body>\n" +
@@ -61,7 +57,7 @@ def parce (item_id):
                         "<div><br></div>" + "<div>\n" +
                         "<ul>\n" +
                         html_desc + "</ul></div></body></html>"
-                        )
+                        ).replace(' ;','')
     #saving HTML description to a file
     f = open(save_path+'-html.html', 'w', encoding='utf-8')
     f.write(file_description)

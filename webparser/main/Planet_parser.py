@@ -12,7 +12,7 @@ def parse(site):
     req = Request(site, headers={'User-Agent': 'Chrome/91.0'})
     soup = BeautifulSoup(urlopen(req), features="html.parser")
 
-    item_id = soup.find('h2', class_='h5 text-planet pt-2 m-0').getText()[4:]
+    item_id = soup.find('h2', class_='h5 text-planet pt-2 m-0').getText()[4:].replace('/', '-')
 
     save_path = os.path.dirname(os.path.realpath(__file__)) + f'\RESULT\\Planet_files\{item_id}'
 
@@ -42,9 +42,9 @@ def parse(site):
 
     item_description = '<ul>\n'
     for i in range (len(item_left_descr)):
-        item_description += "<li> " + translator.translate(item_left_descr[i].getText() + ': ' + item_right_descr[i].getText("; ", strip=True),src='en', dest='ru').text + ' </li>\n'
+       item_description += "<li> " + item_left_descr[i].getText() + ': ' + item_right_descr[i].getText("; ", strip=True) + ' </li>\n'
     item_description += '</ul>'
-
+    item_description =  translator.translate(item_description, src='en', dest='ru').text
 
     file_description = ("<html><head></head>\n" +
                                                 "<body>\n" + "<div>" +
