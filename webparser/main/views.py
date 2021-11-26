@@ -19,6 +19,7 @@ from .Mikrotik_parcer import parce as mikrotik1
 from .Ubiquiti_parser import parce as ubiquiti1
 from .APC_parser import parse as apc1
 from .Planet_parser import parse as planet1
+from .CMO_parser import parse as cmo1
 
 
 
@@ -103,6 +104,36 @@ def bolid(request):
 
     data = {
         'title': 'Парсер Болид',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
+
+
+def cmo(request):
+    error = ''
+    clear = ''
+    value = 'Ссылка на страницу продукта:'
+    description = 'Парсер собирает данные со страницы сайта cmo.ru по ссылке. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' изображение позиции, а также файл с паспортом'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                cmo1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог CMO_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер ЦМО',
         'form': form,
         'clear': clear,
         'value': value,

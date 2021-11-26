@@ -6,6 +6,7 @@ urlpatterns = [
     path('apc/', views.apc, name = 'apc'),
     path('dkc/', views.dkc, name = 'dkc'),
     path('bolid/', views.bolid, name = 'bolid'),
+    path('cmo/', views.cmo, name = 'cmo'),
     path('dahua/', views.dahua, name = 'dahua'),
     path('dlink/', views.dlink, name = 'dlink'),
     path('hikvision/', views.hikvision, name = 'hikvision'),
