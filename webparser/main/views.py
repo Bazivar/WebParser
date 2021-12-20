@@ -20,6 +20,7 @@ from .Ubiquiti_parser import parce as ubiquiti1
 from .APC_parser import parse as apc1
 from .Planet_parser import parse as planet1
 from .CMO_parser import parse as cmo1
+from .ABB1_parser import parse as abb1
 
 
 
@@ -35,7 +36,8 @@ from .ITK_parcer import parce as itk_parse
 def index(request):
     data = {
         'title': 'Парсер файлов с веб-страниц сайтов вендоров',
-        'vendors': ["APC",
+        'vendors': ['ABB',
+                    "APC",
                "Bolid",
                "D-link", "DKC", 'Dahua',
                'Hikvision',
@@ -50,6 +52,35 @@ def index(request):
         'version': 2.3
     }
     return render(request, 'main/index.html', data)
+
+def abb(request):
+    error = ''
+    clear = ''
+    value = 'Партномер:'
+    description = 'Парсер собирает данные со страницы сайта new.abb.com по партномеру. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' и изображение позиции'
+    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+        form1 = ArticlesForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            try:
+                abb1(form1.cleaned_data['partnumber'])
+                clear = 'Готово. Проверьте каталог ABB_files'
+            except:
+                error = 'Ошибка. Проверьте ссылку'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = ArticlesForm()
+
+    data = {
+        'title': 'Парсер ABB',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/parser.html', data)
 
 def apc(request):
     error = ''

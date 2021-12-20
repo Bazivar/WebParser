@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib
 from urllib.request import Request, urlopen
-import re
 import openpyxl
 from pdfrw import PdfReader, PdfWriter
 import os
