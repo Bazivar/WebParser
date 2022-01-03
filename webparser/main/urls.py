@@ -24,6 +24,7 @@ urlpatterns = [
     path('wago/', views.wago, name = 'wago'),
 
 
+    path('abb_mass/', views.abb_mass, name = 'abb_mass'),
     path('se_mass/', views.se_mass, name = 'se_mass'),
     path('dkc_mass/', views.dkc_mass, name = 'dkc_mass'),
     path('iek_mass/', views.iek_mass, name = 'iek_mass'),

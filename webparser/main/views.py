@@ -31,6 +31,7 @@ from .Rittal_parser import parce as rittal_parse
 from .Wago_parser import parce as wago_parse
 from .IEK_Parcer import parce as iek_parse
 from .ITK_parcer import parce as itk_parse
+from .ABB_parser import parce as abb_parse
 
 
 def index(request):
@@ -626,7 +627,39 @@ def wago(request):
 
 
 
+def abb_mass(request):
+    error = ''
+    clear = ''
+    value = 'Номера позиций прайса'
+    price = 'main/price/abb_price.xlsx'
+    description = 'Парсер собирает данные данные с сайта abb.com на основании прайса. Собирается и сохраняется информация с описанием выбранной позиции,' \
+                  ' и изображение позиции. '
 
+    if request.method == 'POST':
+        form1 = NumbersForm(request.POST)
+        if form1.is_valid():  # проверка на корректность введённых данных
+            a = form1.cleaned_data['value_a']
+            b = form1.cleaned_data['value_b']
+            if int(a) > int(b):
+                error = 'Ошибка. Неверный ввод'
+            else:
+                abb_parse(a, b)
+                clear = f'Готово: позиции прайса с {a} по {b} обработаны. Проверьте каталог ABB_files'
+        else:
+            error = 'Ошибка. Неверный ввод'
+
+    form = NumbersForm()
+
+    data = {
+        'title': 'Парсер ABB',
+        'form': form,
+        'clear': clear,
+        'value': value,
+        'price': price,
+        'description': description,
+        'error': error}
+
+    return render(request, 'main/mass_parser.html', data)
 
 
 
@@ -639,7 +672,7 @@ def se_mass(request):
     description = 'Парсер собирает данные данные с сайта se.com на основании прайса. Собирается и сохраняется информация с описанием выбранной позиции,' \
                   ' изображение позиции и файл с описанием производителя. '
 
-    if request.method == 'POST':  # если метод передачи данных на страницу соответствует тому, что мы задали на странице create.html
+    if request.method == 'POST':
         form1 = NumbersForm(request.POST)
         if form1.is_valid():  # проверка на корректность введённых данных
             a = form1.cleaned_data['value_a']
