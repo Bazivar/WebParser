@@ -30,7 +30,10 @@ def parce (item_id):
                             style="border-top: 1px solid #76d750;border-bottom: 1px solid #76d750;padding: 15px 0; margin: 15px 0; white-space: pre-line;").getText()
 
     # getting the benefits
-    item_benefits = soup.find("p", style="white-space: pre-line;").getText()
+    try:
+        item_benefits = soup.find("p", style="white-space: pre-line;").getText()
+    except:
+        item_benefits = ''
 
     # getiing description
     item_description = str(soup.find_all("td", style="padding: 5px;"))
@@ -89,7 +92,7 @@ def parce (item_id):
         usage = ""
     else:
         usage = "<h3><b>НАЗНАЧЕНИЕ</b></h3>\n" + "<div><br></div>\n" + item_usage_desc + "<div><br></div>\n"
-    if item_benefits == None:
+    if item_benefits == '':
         benefits = ""
     else:
         item_benefits = item_benefits.split("\n")

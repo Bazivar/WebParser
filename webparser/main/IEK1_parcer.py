@@ -15,7 +15,7 @@ def parce (item_id):
 
 
     # getting the page
-    site = f"https://www.iek.ru/products/catalog/?page=detail&article={item_id}"
+    site = f"https://old.iek.ru/products/catalog/?page=detail&article={item_id}"
     req = Request(site, headers={'User-Agent': 'Chrome/91.0'})
     soup = BeautifulSoup(urlopen(req), features="html.parser")
     strsoup = str(soup)
@@ -24,7 +24,7 @@ def parce (item_id):
     item_short_name = soup.find("h1",class_="navstring").getText()
 
     # getting the image link
-    item_image_link = "https://www.iek.ru" + re.search(r'/upload/iek.prodcat/file/.+[pngj]{3}', strsoup).group(0)
+    item_image_link = "https://old.iek.ru" + re.search(r'/upload/iek.prodcat/file/.+[pngj]{3}', strsoup).group(0)
 
     # getting the usage
     item_usage_desc = soup.find("div",
@@ -44,7 +44,7 @@ def parce (item_id):
 
     # getting the pdf link of quick installation manual
     try:
-        item_short_pdf_link = "https://www.iek.ru" + re.search(
+        item_short_pdf_link = "https://old.iek.ru" + re.search(
             r'title="Краткое руководство по эксплуатации"><a href="(/local/components/iek/prodcat\.catalog\.detail/download\.php\?hash=[\w\d]+)',
             strsoup).group(0)
         item_short_pdf_link = item_short_pdf_link.replace('title="Краткое руководство по эксплуатации"><a href="', '')
@@ -53,7 +53,7 @@ def parce (item_id):
 
     # getting the installation manual
     try:
-        item_install_manual_pdf_link = "https://www.iek.ru" + re.search(
+        item_install_manual_pdf_link = "https://old.iek.ru" + re.search(
             r'title="Руководство По Эксплуатации"><a href="(/local/components/iek/prodcat\.catalog\.detail/download\.php\?hash=[\w\d]+)',
             strsoup).group(0)
         item_install_manual_pdf_link = item_install_manual_pdf_link.replace('title="Руководство По Эксплуатации"><a href="',
